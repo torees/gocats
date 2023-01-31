@@ -4,12 +4,23 @@ This is a sample app to verify and test deployments pipelines in kubernetes
 
 The app is a simple api without any frontend. It exposes the following endpoints
 
-* / 
-Main interface, will reply with a random cat name on GET requests
-* /hello
-This endpoint replies to GETS with a configurable string, set by the APP_MSG env variable for the app
-* /metrics
+* / \
+ Main interface, will reply with a random cat name on GET requests 
+* /hello \
+ This endpoint replies to GETS with a configurable string, set by the APP_MSG env variable for the app 
+* /metrics \
 Prometheus metrics for the go process, including a gocats_processed_cats_total metric to see the number of served catnames 
+
+### Configuration
+
+You can configure the application port, the configurable message and the log level using ENV vars: \
+
+Image Defaults:
+* APP_PORT=8000
+* APP_MSG="Howdy wrangler" 
+* LOG_LEVEL=MUTE
+
+By changing LOG_LEVEL to "CATS", the app will log what cat names have been served, and to which client
 
 ## Testing 
 
@@ -17,7 +28,10 @@ Prometheus metrics for the go process, including a gocats_processed_cats_total m
 
 See the included compose.yml file for configuration. To get GOCATS running, simply
 
+```
 podman-compose up (or docker-compose)
+```
+
 
 ### Running in Kubernetes 
 
@@ -38,4 +52,6 @@ config:
   log_level: "CATS"
 
 ```
+```
 helm install gocats ./gocats-chart -n <your namespace>
+```
