@@ -1,0 +1,10 @@
+version: "3"
+services:
+  gocats:
+    image: quay.io/tore_saterdal/gocats
+    ports:
+      - "8001:8001"
+    environment:
+      - APP_PORT=8001
+      - APP_MSG="Running in compose"
+      - LOG_LEVEL=CATS

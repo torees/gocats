@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gocats
+  name: gocats
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gocats
+  strategy:
+    spec:
+      containers:
+      - env:
+        - name: APP_MSG
+          valueFrom:
+            configMapKeyRef:
+              key: APP_MSG
+              name: gocats-config
+        - name: APP_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: APP_PORT
+              name: gocats-config
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              key: LOG_LEVEL
+              name: gocats-config
+        image: quay.io/tore_saterdal/gocats
+        imagePullPolicy: Always
+        name: gocats
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
